@@ -61,15 +61,6 @@ public struct Money : CustomStringConvertible, Mathematics{
         }
     }
     
-//    // Functions in Mathematics protocol
-//    func +(left: Money, right: Money) -> Money {
-//        return left.add(right)
-//    }
-//    
-//    func - (left: Money, right: Money) -> Money {
-//        return left.subtract(right)
-//    }
-    
     // Convert to the currency passed in
     public func convert(to: String) -> Money {
         // Check for same currency
@@ -121,13 +112,35 @@ func - (left: Money, right: Money) -> Money {
 ////////////////////////////////////
 // Job
 //
-public class Job {
+public class Job: CustomStringConvertible {
     public var title: String
     public enum JobType {
         case Hourly(Double)
         case Salary(Int)
     }
     public var income: JobType
+    
+    public init(title: String, income: JobType) {
+        self.title = title
+        self.income = income
+        switch income {
+        case .Hourly(let rate): self._description = "The person is  a \(title) and earns \(rate) per hour"
+        case .Salary(let salary): self._description = "The person is  a \(title) and earns a salary of \(salary)"
+
+        }
+    }
+    
+    // Human readable format
+    private var _description: String
+    public var description: String {
+        get{
+            return _description
+        }
+        set(value){
+            _description = value
+        }
+    }
+
     
     public init(title : String, type : JobType) {
         self.title = title
@@ -155,7 +168,7 @@ public class Job {
 ////////////////////////////////////
 // Person
 //
-public class Person {
+public class Person: CustomStringConvertible {
     public var firstName : String = ""
     public var lastName : String = ""
     public var age : Int = 0
@@ -212,7 +225,7 @@ public class Person {
 ////////////////////////////////////
 // Family
 //
-public class Family {
+public class Family: CustomStringConvertible {
     private var members : [Person] = []
     
     public init(spouse1: Person, spouse2: Person) {
