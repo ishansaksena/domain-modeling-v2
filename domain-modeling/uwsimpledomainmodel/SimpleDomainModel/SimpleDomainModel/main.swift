@@ -139,12 +139,6 @@ public class Job: CustomStringConvertible {
             _description = value
         }
     }
-
-    
-    public init(title : String, type : JobType) {
-        self.title = title
-        self.income = type
-    }
     
     public func calculateIncome(hours: Int) -> Int {
         // Check hourly vs. salary
@@ -224,7 +218,7 @@ public class Person: CustomStringConvertible {
         self.firstName = firstName
         self.lastName = lastName
         self.age = age
-        _description = toString()
+        self._description = "[Person: firstName:\(firstName) lastName:\(lastName) age:\(age)]"
     }
     
     // Human readable format from model #1
@@ -241,6 +235,17 @@ public class Person: CustomStringConvertible {
 public class Family: CustomStringConvertible {
     private var members : [Person] = []
     
+    // Human readable format
+    private var _description: String
+    public var description: String {
+        get{
+            return _description
+        }
+        set(value){
+            _description = value
+        }
+    }
+    
     public init(spouse1: Person, spouse2: Person) {
         spouse1.spouse = nil
         spouse2.spouse = nil
@@ -248,6 +253,7 @@ public class Family: CustomStringConvertible {
         spouse2.spouse = spouse1
         members.append(spouse1)
         members.append(spouse2)
+        self._description = "The \(spouse1.lastName) family has \(spouse1.firstName) and \(spouse2.firstName). "
     }
     
     public func haveChild(child: Person) -> Bool {
@@ -257,6 +263,7 @@ public class Family: CustomStringConvertible {
                 return true
             }
         }
+        self._description += "Their \(members.count - 2)th child is \(child.firstName)"
         return false
     }
     
