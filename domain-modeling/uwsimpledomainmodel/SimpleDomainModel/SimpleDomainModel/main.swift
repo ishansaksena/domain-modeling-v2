@@ -126,7 +126,6 @@ public class Job: CustomStringConvertible {
         switch income {
         case .Hourly(let rate): self._description = "The person is  a \(title) and earns \(rate) per hour"
         case .Salary(let salary): self._description = "The person is  a \(title) and earns a salary of \(salary)"
-
         }
     }
     
@@ -209,12 +208,26 @@ public class Person: CustomStringConvertible {
         }
     }
     
+    // Human readable format
+    private var _description: String
+    public var description: String {
+        get{
+            return _description
+        }
+        set(value){
+            _description = value
+        }
+    }
+
+    
     public init(firstName : String, lastName: String, age : Int) {
         self.firstName = firstName
         self.lastName = lastName
         self.age = age
+        _description = toString()
     }
     
+    // Human readable format from model #1
     public func toString() -> String {
         var summary: String = ""
         summary = "[Person: firstName:\(firstName) lastName:\(lastName) age:\(age) job:\(job) spouse:\(spouse)]"
