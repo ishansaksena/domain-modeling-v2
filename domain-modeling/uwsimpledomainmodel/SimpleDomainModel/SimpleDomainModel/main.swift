@@ -266,10 +266,10 @@ public class Family: CustomStringConvertible {
         for person in members {
             if (person.age > 21) {
                 members.append(child)
+                self._description += "Their child no. \(members.count - 2) is \(child.firstName)"
                 return true
             }
         }
-        self._description += "Their \(members.count - 2)th child is \(child.firstName)"
         return false
     }
     
