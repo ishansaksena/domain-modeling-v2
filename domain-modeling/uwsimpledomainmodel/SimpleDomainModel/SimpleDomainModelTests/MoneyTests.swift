@@ -99,7 +99,7 @@ class MoneyTests: XCTestCase {
         let sameSum = tenUSD + tenUSD
         XCTAssert(sameSum.amount == 20)
         XCTAssert(sameSum.currency == "USD")
-
+        
         let diffSum = tenUSD + fiveGBP
         XCTAssert(diffSum.amount == 10)
         XCTAssert(diffSum.currency == "GBP")
@@ -108,7 +108,7 @@ class MoneyTests: XCTestCase {
     // Tests -
     func canISubtract() {
         let samesub = tenUSD - tenUSD
-        XCTAssert(samesub.amount == 20)
+        XCTAssert(samesub.amount == 0)
         XCTAssert(samesub.currency == "USD")
         
         let diffsub = tenUSD - fiveGBP
@@ -116,5 +116,23 @@ class MoneyTests: XCTestCase {
         XCTAssert(diffsub.currency == "GBP")
     }
     
+    func testOps() {
+        canIAdd()
+        canISubtract()
+    }
+    
+    func testingExtensions() {
+        let m1 = 13.USD
+        XCTAssert(m1.amount == 13)
+        XCTAssert(m1.currency == "USD")
+        
+        let m2 = 10.USD + 5.GBP
+        XCTAssert(m2.amount == 10)
+        XCTAssert(m2.currency == "GBP")
+        
+        let m3 = 10.USD - 5.GBP
+        XCTAssert(m3.amount == 0)
+        XCTAssert(m3.currency == "GBP")
+    }
 }
 
