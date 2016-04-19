@@ -8,12 +8,12 @@
 
 import Foundation
 
-print("Hello, World!")
-
+// For Unit Tests
 public func testMe() -> String {
     return "I have been tested"
 }
 
+// For Unit Tests
 public class TestMe {
     public func Please() -> String {
         return "I have been tested"
@@ -22,7 +22,7 @@ public class TestMe {
 
 ////////////////////////////////////
 // CustomStringConvertible
-//
+// Class must have a human readable format
 protocol CustomStringConvertible {
     // Human readable representation
     var description : String { get set }
@@ -36,15 +36,14 @@ protocol Mathematics {
     func - (left: Money, right: Money) -> Money
 }
 
-
 ////////////////////////////////////
 // Money
 //
 public struct Money : CustomStringConvertible, Mathematics{
-    public var amount : Int
+    public var amount : Double
     public var currency : String
     
-    public init(amount: Int, currency: String) {
+    public init(amount: Double, currency: String) {
         self.amount = amount
         self.currency = currency
         self._description = "\(self.currency)\(self.amount)"
@@ -69,22 +68,22 @@ public struct Money : CustomStringConvertible, Mathematics{
         }
         
         // Convert to USD
-        var usdCurrency = 0
+        var usdCurrency = 0.0
         switch self.currency {
         case "USD": usdCurrency = self.amount
-        case "GBP": usdCurrency = Int(2 * Double(self.amount))
-        case "EUR": usdCurrency = Int(2.0/3 * Double(self.amount))
-        case "CAN": usdCurrency = Int(0.8 * Double(self.amount))
+        case "GBP": usdCurrency = 2 * Double(self.amount)
+        case "EUR": usdCurrency = 2.0/3 * Double(self.amount)
+        case "CAN": usdCurrency = 0.8 * Double(self.amount)
         default: usdCurrency = -1
         }
         
-        var finalAmount = 0
+        var finalAmount = 0.0
         // Convert to new currency
         switch to {
         case "USD": finalAmount = usdCurrency
-        case "GBP": finalAmount = Int(0.5 * Double(usdCurrency))
-        case "EUR": finalAmount = Int(1.5 * Double(usdCurrency))
-        case "CAN": finalAmount = Int(1.25 * Double(usdCurrency))
+        case "GBP": finalAmount = 0.5 * Double(usdCurrency)
+        case "EUR": finalAmount = 1.5 * Double(usdCurrency)
+        case "CAN": finalAmount = 1.25 * Double(usdCurrency)
         default: finalAmount = -1
         }
         return Money(amount: finalAmount, currency: to)
@@ -100,12 +99,20 @@ public struct Money : CustomStringConvertible, Mathematics{
 }
 
 // Functions in Mathematics protocol for Money
-func +(left: Money, right: Money) -> Money {
+func + (left: Money, right: Money) -> Money {
     return left.add(right)
 }
 
 func - (left: Money, right: Money) -> Money {
     return left.subtract(right)
+}
+
+// Extending Double for Money
+extension Double {
+    var USD: Money {return Money(amount: self, currency: "USD")}
+    var GBP: Money {return Money(amount: self, currency: "GBP")}
+    var EUR: Money {return Money(amount: self, currency: "EUR")}
+    var CAN: Money {return Money(amount: self, currency: "CAN")}
 }
 
 
@@ -120,9 +127,9 @@ public class Job: CustomStringConvertible {
     }
     public var income: JobType
     
-    public init(title: String, income: JobType) {
+    public init(title: String, type: JobType) {
         self.title = title
-        self.income = income
+        self.income = type
         switch income {
         case .Hourly(let rate): self._description = "The person is  a \(title) and earns \(rate) per hour"
         case .Salary(let salary): self._description = "The person is  a \(title) and earns a salary of \(salary)"
@@ -150,7 +157,6 @@ public class Job: CustomStringConvertible {
     
     public func raise(amt : Double) {
         // Check hourly vs. salary
-        
         switch income {
         case .Hourly(let rate): income = JobType.Hourly(rate + amt)
         case .Salary(let salary): income = JobType.Salary(salary + Int(amt))
@@ -281,8 +287,3 @@ public class Family: CustomStringConvertible {
         return income
     }
 }
-
-
-
-
-
