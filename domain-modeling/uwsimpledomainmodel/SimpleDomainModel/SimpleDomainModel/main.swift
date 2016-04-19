@@ -131,8 +131,8 @@ public class Job: CustomStringConvertible {
         self.title = title
         self.income = type
         switch income {
-        case .Hourly(let rate): self._description = "The person is  a \(title) and earns \(rate) per hour"
-        case .Salary(let salary): self._description = "The person is  a \(title) and earns a salary of \(salary)"
+        case .Hourly(let rate): self._description = "The person is a \(title) and earns \(rate) per hour"
+        case .Salary(let salary): self._description = "The person is a \(title) and earns a salary of \(salary)"
         }
     }
     

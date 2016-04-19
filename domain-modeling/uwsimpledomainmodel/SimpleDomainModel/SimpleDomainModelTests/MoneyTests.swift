@@ -134,5 +134,19 @@ class MoneyTests: XCTestCase {
         XCTAssert(m3.amount == 0)
         XCTAssert(m3.currency == "GBP")
     }
+    
+    func testDescriptions() {
+        let sameSum = tenUSD + tenUSD
+        XCTAssert(sameSum.description == "USD20.0")
+        
+        let samesub = tenUSD - tenUSD
+        XCTAssert(samesub.description == "USD0.0")
+    }
 }
+
+
+
+
+
+
 
